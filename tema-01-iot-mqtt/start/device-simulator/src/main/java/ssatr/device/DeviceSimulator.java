@@ -36,8 +36,9 @@ public class DeviceSimulator {
         mqtt.subscribe(Config.commandTopic(deviceId), commands);
 
         PeriodicTelemetryTask periodic = new PeriodicTelemetryTask(deviceId, sensor, mqtt, alarmEvents);
-        SporadicAlarmTask sporadic = new SporadicAlarmTask(deviceId, mqtt, alarmEvents);
+        //SporadicAlarmTask sporadic = new SporadicAlarmTask(deviceId, mqtt, alarmEvents);
         AperiodicCommandTask aperiodic = new AperiodicCommandTask(deviceId, sensor, mqtt, commands, periodic);
+        SporadicAlarmTask sporadic = new SporadicAlarmTask(deviceId, mqtt, alarmEvents, periodic);
 
         new Thread(periodic, "periodic").start();
         new Thread(sporadic, "sporadic").start();
